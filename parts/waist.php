@@ -1,16 +1,18 @@
 <div class="container">
 	<div class="row login-section mt-5">
-		<div class="col-md-4 text-center mt-5 bgc">
-			<h2 class="section-title">Sign In</h2>
-			<form>
-				<input type="text" class="form-control mb-2" placeholder="Email / Phone No.">
-				<input type="password" class="form-control mb-2" placeholder="Password">
-				<button type="submit" class="btn btn-primary btn-block">Login</button>
-			</form>
-			<button class="btn btn-secondary mt-2">Sign up</button>
-		</div>
+		<?php if(!isset($_SESSION["user_name"])){ ?> 
+			<div class="col-md-4 text-center mt-5 bgc">
+				<h2 class="section-title">Sign In</h2>
+				<form action="lib/signup.php?page=login" method="post" enctype="multipart/form-data">
+					<input type="text" class="form-control mb-2" name="email" placeholder="Email / Phone No. /Username">
+					<input type="password" class="form-control mb-2" name="password" placeholder="Password">
+					<button type="submit" class="btn btn-primary btn-block" name="login">Login</button>
+				</form>
+				<a href="menu/login.php" class="btn btn-secondary mt-2">Sign up</a>
+			</div>
+		 <?php } ?>
 		<div class="col-md-4 text-center report-section mt-5 bgc">
-			<h2 class="section-title">Report</h2>
+			<h2 class="section-title"><?php if(isset($_SESSION["user_name"])){echo $_SESSION["first_name"];} ?> Report</h2>
 			<form>
 				<input type="text" class="form-control mb-2" placeholder="Name">
 				<input type="text" class="form-control mb-2" placeholder="Description (100 words)">
