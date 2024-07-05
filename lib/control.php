@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set("africa/lagos");
 
 	$page_info = new page_info;
 	if($page_info->page_id == '1'){
@@ -7,11 +8,7 @@
 		include("../lib/conn.php");
 	}elseif($page_info->page_id == '3'){
 		include("../../lib/conn.php");
-	}
-	
-	date_default_timezone_set("africa/lagos");
-	$date = date("h:i:s D,d/m/Y");
-	
+	}	
 	
 
 	
@@ -20,6 +17,19 @@
 	class control extends conn{
 		
 		public $url = NULL;
+		
+		
+		public function __construct(){
+			$this->date = date("h:i:s D,d/m/Y");
+		}
+		
+		function check(){
+			if($this->conn() == true){
+				echo"<font color='green'>Database is connected</code>";
+			}else{
+				echo"<code>Database not connected</code>";
+			}
+		}
 		
 		function path($url){
 			$this->url = $url;
@@ -94,6 +104,91 @@
 			}
 		}
 		
+		public function sql_query($order,$sql){
+			if($order == 'table'){
+				if(mysqli_query($this->conn(),$sql)){
+					echo("TABLE SUCCESFULLY CREATED");
+				}else{
+					("could not create table".mysqli_error($conn));
+				}
+			}elseif($order == 'insert'){
+				if(mysqli_query($this->conn(),$sql)){
+					echo("YOUR RECORD/ DATA HAS BEEN SUCCESFULLY INSERTED");
+					if(isset($_SESSION['firstname'])){
+						echo"<script type='text/javascript'> alert('$_SESSION[firstname] congratulations,you have succesfully signed the NEW user in. '); window.location.href = '../index.php';</script>";
+						}else{
+							echo"<script type='text/javascript'> alert('CONGRATULATIONS: YOU HAVE SUCCEFULLY CREATED AN ACCOUNT WITH ".$this->app_name.", THANK YOU. '); window.location.href = '../index.php';</script>";
+						}
+					
+				}else{
+					die("could not insert record".mysqli_error($conn));
+					if(isset($_SESSION['firstname'])){
+						echo"<script type='text/javascript'> alert(' so sorry $_SESSION[firstname], you were unable to sign in that user please try again '); window.location.href = '../index.php';</script>";
+						}else{
+							echo "<script type='text/javascript'> alert('could not create account please try again '); window.location.href = 'index.php';</script>";
+						}
+				}
+			}elseif($order == 'update'){
+				if(mysqli_query($this->conn(),$sql)){
+					echo'YOUR DATA HAS BEEN SUCCESFULLY UPDATED';
+					echo"<script> alert('YOUR UPDATE IS SUCCESFUL...'); window.location.href='setting';</script>";
+				}else{
+					//echo'ERROR!!! data could not be updated'.mysqli_error($conn);
+					echo"<script> alert('ERROR!!!, could not update you data...'); window.location.href='setting';</script>";
+				}
+			}elseif($order == 'select'){
+				if($retval = mysqli_query($this->conn(),$sql)){
+					echo'<table><tr><td>CONNECTION SUCCEFUL<td><td style="width:30px;"><marquee direction="right">.....</marquee></td></tr></table><br />';
+					echo"<table><tr><td><div style='width:50px'><marquee>.....</marquee></div></td><td><font color='green'>ready to deliver(retreiving)</td><td><div style='width:50px'><marquee direction='right'>.....</marquee></div></font></td></tr></table><br>";
+					
+					while($row = mysqli_fetch_assoc($retval)){
+						
+					echo"<table border='1'>";
+					echo"<thead><tr><th>ID</th><th>FIRST NAME</th><th>LAST NAME</th><th>OTHER NAME</th><th>USER NAME</th><th>EMAIL</th><th>PHONE</th><th>PASSWORD</th><th>ADDRESS</th><th>SEX</th><th>COUNTRY</th><th>SEX</th><th>LGA</th><th>REFERAL CODE</th></tr></thead>";
+					echo'<tbody>';
+						echo "<tr><td>00 ".$row['id'].'</td><td>  '.$row['f_name'].' </td><td> '.$row['l_name'].' </td><td> '.$row['o_name'].' </td><td> '.$row['u_name'].' </td><td> '.$row['email'].' </td><td> '.$row['phone'].' </td><td> '.$row['password'].' </td><td> '.$row['address'].' </td><td> '.$row['sex'].' </td><td> '.$row['country'].' </td><td> '.$row['state'].' </td><td> '.$row['lga']."</td><td>".$row['r_code']."</td></tr>";
+						echo'</tbody>';
+						echo'</table>';
+					}
+				}else{
+					echo'could not retrieve your data';
+				}
+			}elseif($order == 'login'){
+					if(mysqli_num_rows($retval = mysqli_query($this->conn(),$sql)) > 0){
+						$row = mysqli_fetch_assoc($retval);
+						//session_start();
+						
+						$_SESSION['user_id'] = $row['id'];
+						$_SESSION['first_name'] = $row['first_name'];
+						$_SESSION['middle_name'] = $row['middle_name'];
+						$_SESSION['last_name'] = $row['last_name'];
+						$_SESSION['user_name'] = $row['user_name'];
+						$_SESSION['email'] = $row['email'];
+						$_SESSION['phone'] = $row['phone'];
+						$_SESSION['password'] = $row['password'];
+						$_SESSION['address'] = $row['address'];
+						$_SESSION['sex'] = $row['sex'];
+						$_SESSION['country'] = $row['country'];
+						$_SESSION['state'] = $row['state'];
+						$_SESSION['lga'] = $row['lga'];
+						$_SESSION['date_of_birth'] = $row['date_of_birth'];
+						$_SESSION['postal_code'] = $row['postal_code'];
+						$_SESSION['profession'] = $row['profession'];
+						$_SESSION['marital_status'] = $row['marital_status'];
+						$_SESSION['religion'] = $row['religion'];
+						$_SESSION['nk_name'] = $row['nk_name'];
+						$_SESSION['nk_phone'] = $row['nk_phone'];
+						
+						$sql = "UPDATE users SET presence = '1' WHERE id = '$_SESSION[user_id]'";
+						mysqli_query($this->conn(),$sql);
+						
+						echo"<script type='text/javascript'> alert('WELCOME $_SESSION[first_name] $_SESSION[last_name]'); window.location.href='../index.php?app_name=".$this->app_name."';  </script>";	
+						
+					}else{
+						echo"<script type='text/javascript'> alert('user doesnt exist please check your email,username & password or create an account'); window.location.href='../index.php?app_name=".$_REQUEST['app_name']."';  </script>";	
+					}
+			}
+		}
 
 
 	}
@@ -101,8 +196,14 @@
 	
 	
 	#[AllowDynamicProperties]
-	class fetcher extends conn{
-		
+	class fetcher extends control{
+		function users_table(){
+			$sql = "create table IF NOT EXISTS users(id INT AUTO_INCREMENT, first_name VARCHAR(30) NOT NULL,last_name VARCHAR(30) NOT NULL,middle_name VARCHAR(30) NULL, user_name VARCHAR(20) NOT NULL,email VARCHAR(60) NOT NULL,phone VARCHAR(20) NULL,password VARCHAR(50) NOT NULL,profile_pics VARCHAR(100) NULL,address VARCHAR(100) NULL,sex CHAR(10) NULL,country VARCHAR(30) NULL,state CHAR(30) NULL,date_of_birth VARCHAR(15) NULL,postal_code INT NULL,lga VARCHAR(50) NULL,profession VARCHAR(50) NUll,marital_status VARCHAR(20) NULL,religion VARCHAR(30) NULL,nk_name VARCHAR(50) NULL,nk_phone VARCHAR(20) NULL, presence INT NULL, date CHAR(15) NULL, sign char(20) NULL, primary key(id))";
+			$this->sql_query("table",$sql);
+		}
 	}
+	$fetcher = new fetcher;
+	
+	//$fetcher->users_table();
 	
 ?>
