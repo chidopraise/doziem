@@ -4,7 +4,7 @@
 
 <div class="container content">
 	<h2>Our Mission</h2>
-	<p>At Alert, our mission is to bring loved ones back together. We understand that in times of uncertainty and distress, finding missing loved ones can seem like an impossible task. That's where Alert comes in. Our app harnesses the power of community and technology to bring people together in the search for missing persons. With real-time alerts, community-based search efforts, and seamless integration with local law enforcement, Alert is dedicated to reuniting families and ensuring the safety of our communities.</p>
+	<p>Our mission is to leverage cutting-edge technology to bring loved ones back together by providing a comprehensive, reliable, and user-friendly platform for locating missing persons. We are committed to enhancing public safety and empowering communities through real-time location tracking, emergency alerts, and seamless integration with law enforcement and trusted contacts. We aim to offer peace of mind and swift action in critical situations, ensuring everyone is connected, protected, and swiftly reunited with their loved ones..</p>
 
 	<h2>Our Vision</h2>
 	<p>Our vision is a world where no family has to live in the fear and anguish of a missing loved one. We strive to be the most trusted and effective resource for locating missing persons, connecting communities, and providing support every step of the way. By leveraging the latest technology and fostering strong community networks, we aim to reduce the number of missing persons and reunite families as quickly as possible.</p>

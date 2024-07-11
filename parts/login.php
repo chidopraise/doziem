@@ -27,6 +27,7 @@
 					</div>
 					<button type="submit" class="btn btn-primary btn-block" name="login">Login</button>
 				</form>
+				<div><a href="submit_email.php" style="float:right;">Forgot Password</a></div>
 			</div>
 		</div>
 		<div class="tab-pane fade" id="signup" role="tabpanel" aria-labelledby="signup-tab">

@@ -6,7 +6,7 @@
 
 	<div class="mission mt-5">
 		<h2 class="section-title">Our Mission</h2>
-		<p>“Bringing Loved Ones Back Together”</p>
+		<p>“Our mission is to leverage cutting-edge technology to bring loved ones back together”</p>
 		<p>“Find the Missing, Reunite the Families”</p>
 		<p>“Your Ally in Finding the Missing”</p>
 		<p>“Alert: Every Second Counts in Bringing Them Home”</p>

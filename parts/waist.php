@@ -8,7 +8,7 @@
 					<input type="password" class="form-control mb-2" name="password" placeholder="Password">
 					<button type="submit" class="btn btn-primary btn-block" name="login">Login</button>
 				</form>
-				<a href="menu/login.php" class="btn btn-secondary mt-2">Sign up</a>
+				<div><a href="menu/login.php" class="btn btn-secondary mt-2">Sign up</a><a href="<?php $control->path('menu/submit_email.php'); ?>" style="float:right;">Forgot Password</a></div>
 			</div>
 		 <?php } ?>
 		<div class="col-md-4 text-center report-section mt-5 bgc">

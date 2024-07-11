@@ -1,6 +1,6 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top header">
-        <a class="navbar-brand" href="#home" style="color:#000;"><img src="<?php $control->path('images/logo.jpg'); ?>" class="img_logo" />lert</a>
+        <a class="navbar-brand" href="<?php $control->path('index.php?app_name='.$control->app_name.''); ?>" style="color:#000;"><img src="<?php $control->path('images/logo.jpg'); ?>" class="img_logo" />lert</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>

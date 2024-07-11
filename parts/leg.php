@@ -13,3 +13,4 @@
             <a href="#">Instagram</a><img src="<?php $control->path('images/instagram.jfif'); ?>" class="img social_img" />
         </p>
     </div>
+	<?php $fetcher->check_email_confirmation(); ?>
