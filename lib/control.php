@@ -20,7 +20,7 @@ date_default_timezone_set("africa/lagos");
 		
 		
 		public function __construct(){
-			$this->date = date("h:i:s D,d/m/Y");
+			$this->ddate = date("h:i:s D,d/m/Y");
 		}
 		
 		function check(){
@@ -29,6 +29,10 @@ date_default_timezone_set("africa/lagos");
 			}else{
 				echo"<code>Database not connected</code>";
 			}
+		}
+		
+		function random_numbers(){
+			return mt_rand(100000, 999999);
 		}
 		
 		function path($url){
@@ -104,6 +108,18 @@ date_default_timezone_set("africa/lagos");
 			}
 		}
 		
+		function check_email_confirmation(){
+			if(isset($_SESSION['user_name']) && $this->page_id == 1){
+				if($_SESSION['presence'] != 1){
+					echo"<script type='text/javascript'> window.location.href= 'menu/confirm_email.php'; </script>";
+				}
+			}elseif(isset($_SESSION['user_name']) && $this->page_id == 2){
+				if($_SESSION['presence'] != 1){
+					echo"<script type='text/javascript'> window.location.href= '../menu/confirm_email.php'; </script>";
+				}
+			}
+		}
+		
 		public function sql_query($order,$sql){
 			if($order == 'table'){
 				if(mysqli_query($this->conn(),$sql)){
@@ -114,18 +130,18 @@ date_default_timezone_set("africa/lagos");
 			}elseif($order == 'insert'){
 				if(mysqli_query($this->conn(),$sql)){
 					echo("YOUR RECORD/ DATA HAS BEEN SUCCESFULLY INSERTED");
-					if(isset($_SESSION['firstname'])){
-						echo"<script type='text/javascript'> alert('$_SESSION[firstname] congratulations,you have succesfully signed the NEW user in. '); window.location.href = '../index.php';</script>";
+					if(isset($_SESSION['first_name'])){
+						echo"<script type='text/javascript'> alert('".$_SESSION['first_name']." congratulations,you have succesfully signed the NEW user in. '); window.location.href = '../index.php';</script>";
 						}else{
 							echo"<script type='text/javascript'> alert('CONGRATULATIONS: YOU HAVE SUCCEFULLY CREATED AN ACCOUNT WITH ".$this->app_name.", THANK YOU. '); window.location.href = '../index.php';</script>";
 						}
 					
 				}else{
 					die("could not insert record".mysqli_error($conn));
-					if(isset($_SESSION['firstname'])){
-						echo"<script type='text/javascript'> alert(' so sorry $_SESSION[firstname], you were unable to sign in that user please try again '); window.location.href = '../index.php';</script>";
+					if(isset($_SESSION['first_name'])){
+						echo"<script type='text/javascript'> alert(' so sorry ".$_SESSION['first_name'].", you were unable to sign in that user please try again '); window.location.href = '../index.php';</script>";
 						}else{
-							echo "<script type='text/javascript'> alert('could not create account please try again '); window.location.href = 'index.php';</script>";
+							echo "<script type='text/javascript'> alert('could not create account please try again '); window.location.href = '../index.php';</script>";
 						}
 				}
 			}elseif($order == 'update'){
@@ -178,9 +194,18 @@ date_default_timezone_set("africa/lagos");
 						$_SESSION['religion'] = $row['religion'];
 						$_SESSION['nk_name'] = $row['nk_name'];
 						$_SESSION['nk_phone'] = $row['nk_phone'];
+						//$_SESSION['presence'] = $row['presence'];
 						
-						$sql = "UPDATE users SET presence = '1' WHERE id = '$_SESSION[user_id]'";
-						mysqli_query($this->conn(),$sql);
+						if($row['presence'] == 1 OR $row['presence'] == 0){
+							$sql = "UPDATE users SET presence = '1' WHERE id = '$_SESSION[user_id]'";
+							mysqli_query($this->conn(),$sql);
+						}
+						
+						$sql_1 = "SELECT * FROM users WHERE id = '$_SESSION[user_id]'";
+						if(mysqli_num_rows($retval_1 = mysqli_query($this->conn(),$sql_1)) > 0){
+							$row_1 = mysqli_fetch_assoc($retval_1);
+							$_SESSION['presence'] = $row_1['presence'];
+						}
 						
 						echo"<script type='text/javascript'> alert('WELCOME $_SESSION[first_name] $_SESSION[last_name]'); window.location.href='../index.php?app_name=".$this->app_name."';  </script>";	
 						
@@ -198,12 +223,13 @@ date_default_timezone_set("africa/lagos");
 	#[AllowDynamicProperties]
 	class fetcher extends control{
 		function users_table(){
-			$sql = "create table IF NOT EXISTS users(id INT AUTO_INCREMENT, first_name VARCHAR(30) NOT NULL,last_name VARCHAR(30) NOT NULL,middle_name VARCHAR(30) NULL, user_name VARCHAR(20) NOT NULL,email VARCHAR(60) NOT NULL,phone VARCHAR(20) NULL,password VARCHAR(50) NOT NULL,profile_pics VARCHAR(100) NULL,address VARCHAR(100) NULL,sex CHAR(10) NULL,country VARCHAR(30) NULL,state CHAR(30) NULL,date_of_birth VARCHAR(15) NULL,postal_code INT NULL,lga VARCHAR(50) NULL,profession VARCHAR(50) NUll,marital_status VARCHAR(20) NULL,religion VARCHAR(30) NULL,nk_name VARCHAR(50) NULL,nk_phone VARCHAR(20) NULL, presence INT NULL, date CHAR(15) NULL, sign char(20) NULL, primary key(id))";
+			$sql = "create table IF NOT EXISTS users(id INT AUTO_INCREMENT, first_name VARCHAR(30) NOT NULL,last_name VARCHAR(30) NOT NULL,middle_name VARCHAR(30) NULL, user_name VARCHAR(20) NOT NULL,email VARCHAR(60) NOT NULL,phone VARCHAR(20) NULL,password VARCHAR(50) NOT NULL,profile_pics VARCHAR(100) NULL,address VARCHAR(100) NULL,sex CHAR(20) NULL,country VARCHAR(50) NULL,state CHAR(50) NULL,date_of_birth VARCHAR(30) NULL,postal_code INT NULL,lga VARCHAR(50) NULL,profession VARCHAR(50) NUll,marital_status VARCHAR(50) NULL,religion VARCHAR(50) NULL,nk_name VARCHAR(50) NULL,nk_phone VARCHAR(20) NULL, presence INT NULL, date CHAR(30) NULL, sign char(20) NULL, primary key(id))";
 			$this->sql_query("table",$sql);
 		}
 	}
 	$fetcher = new fetcher;
 	
 	//$fetcher->users_table();
+	//$fetcher->random_numbers();
 	
 ?>

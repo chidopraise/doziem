@@ -118,7 +118,7 @@ body {
             color: #333;
         }
         .missing-person-card p {
-            color: #555;
+            color: #000;
         }
         .missing-person-card .reward {
             color: #d9534f;
@@ -131,7 +131,7 @@ body {
             color: #333;
         }
         .content p {
-            color: #555;
+            color: #fff;
             margin-bottom: 20px;
         }
         .team-section {
@@ -181,7 +181,7 @@ body {
             color: #333;
         }
         .faq-item p {
-            color: #555;
+            color: #fff;
             margin-bottom: 0;
         }
 		
@@ -216,4 +216,8 @@ body {
 		
 		.social_img {
 			width:30px;
+		}
+		
+		div {
+			background-color: #d4a024;
 		}
