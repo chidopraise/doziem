@@ -2,7 +2,7 @@
 	<h1>Google Map and Search</h1>
 </div>
 
-<div id="map"></div>
+<section id="map"></section>
 
 <div class="container search-section">
 	<h2 class="text-center">Search Location</h2>

@@ -9,9 +9,9 @@
 			<div class="missing-person-card">
 				<img src="../images/missing_1.jpg" alt="Found Person">
 				<h2>John Doe</h2>
-				<p>Last seen: June 21, 2024</p>
-				<p>Location: New York, NY</p>
-				<p>Description: 6'0", brown hair, green eyes</p>
+				<p style="color: #000;">Last seen: June 21, 2024</p>
+				<p style="color: #000;">Location: New York, NY</p>
+				<p style="color: #000;">Description: 6'0", brown hair, green eyes</p>
 				<p class="reward">Finder: Jude Eze</p>
 			</div>
 		</div>
@@ -19,9 +19,9 @@
 			<div class="missing-person-card">
 				<img src="../images/missing_1.jpg" alt="Found Person">
 				<h2>Jane Smith</h2>
-				<p>Last seen: June 20, 2024</p>
-				<p>Location: Los Angeles, CA</p>
-				<p>Description: 5'6", blonde hair, blue eyes</p>
+				<p style="color: #000;">Last seen: June 20, 2024</p>
+				<p style="color: #000;">Location: Los Angeles, CA</p>
+				<p style="color: #000;">Description: 5'6", blonde hair, blue eyes</p>
 				<p class="reward">Finder: Ibokun</p>
 			</div>
 		</div>
@@ -29,9 +29,9 @@
 			<div class="missing-person-card">
 				<img src="../images/missing_1.jpg" alt="Found Person">
 				<h2>Michael Johnson</h2>
-				<p>Last seen: June 19, 2024</p>
-				<p>Location: Chicago, IL</p>
-				<p>Description: 5'10", black hair, brown eyes</p>
+				<p style="color: #000;">Last seen: June 19, 2024</p>
+				<p style="color: #000;">Location: Chicago, IL</p>
+				<p style="color: #000;">Description: 5'10", black hair, brown eyes</p>
 				<p class="reward">Finder: Mike</p>
 			</div>
 		</div>

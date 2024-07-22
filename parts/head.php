@@ -18,6 +18,9 @@
 					<li class="nav-item"><a class="nav-link" href="<?php $control->path('menu/contact.php?app_name='.$control->app_name.''); ?>">Contact Us</a></li>
 					<li class="nav-item"><a class="nav-link" href="<?php $control->path('menu/faq.php?app_name='.$control->app_name.''); ?>">FAQ</a></li>
 					<li class="nav-item"><a class="nav-link" href="<?php $control->path('menu/tc.php?app_name='.$control->app_name.''); ?>">T&CS</a></li>
+					<?php if($control->page_name == "profile"){ ?>
+						<li class="nav-item"><a class="nav-link" href="<?php $control->path('menu/privacy_policy.php?app_name='.$control->app_name.''); ?>">Privacy Policy</a></li>
+					<?php } ?>
 					<li class="nav-item"><a class="nav-link" href="<?php $control->path('lib/signup.php?app_name='.$control->app_name.'&page=logout'); ?>">Logout</a></li>
 				<?php }else{ ?>
 					<li class="nav-item"><a class="nav-link" href="<?php $control->path('index.php?app_name='.$control->app_name.''); ?>">Home</a></li>
