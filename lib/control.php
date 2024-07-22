@@ -18,9 +18,34 @@ date_default_timezone_set("africa/lagos");
 		
 		public $url = NULL;
 		
-		
 		public function __construct(){
-			$this->ddate = date("h:i:s D,d/m/Y");
+			$this->ddate = date("h:i d/m/y");
+			$sql = "SELECT * FROM users WHERE id = '$_SESSION[user_id]'";
+			$retval = mysqli_query($this->conn(),$sql);
+			if(mysqli_num_rows($retval)){
+				$row = mysqli_fetch_assoc($retval);
+				$this->first_name = $row["first_name"];
+				$this->last_name = $row["last_name"];
+				$this->middle_name = $row["middle_name"];
+				$this->user_name = $row["user_name"];
+				$this->email = $row["email"];
+				$this->phone = $row["phone"];
+				$this->profile_pics = $row["profile_pics"];
+				$this->address = $row["address"];
+				$this->sex = $row["sex"];
+				$this->country = $row["country"];
+				$this->state = $row["state"];
+				$this->date_of_birth = $row["date_of_birth"];
+				$this->postal_code = $row["postal_code"];
+				$this->lga = $row["lga"];
+				$this->profession = $row["profession"];
+				$this->marital_status = $row["marital_status"];
+				$this->religion = $row["religion"];
+				$this->nk_name = $row["nk_name"];
+				$this->nk_phone = $row["nk_phone"];
+				$this->presence = $row["presence"];
+				$this->date = $row["date"];
+			}
 		}
 		
 		function check(){
@@ -125,7 +150,7 @@ date_default_timezone_set("africa/lagos");
 				if(mysqli_query($this->conn(),$sql)){
 					echo("TABLE SUCCESFULLY CREATED");
 				}else{
-					("could not create table".mysqli_error($conn));
+					echo("could not create table".mysqli_error($conn));
 				}
 			}elseif($order == 'insert'){
 				if(mysqli_query($this->conn(),$sql)){
@@ -226,10 +251,59 @@ date_default_timezone_set("africa/lagos");
 			$sql = "create table IF NOT EXISTS users(id INT AUTO_INCREMENT, first_name VARCHAR(30) NOT NULL,last_name VARCHAR(30) NOT NULL,middle_name VARCHAR(30) NULL, user_name VARCHAR(20) NOT NULL,email VARCHAR(60) NOT NULL,phone VARCHAR(20) NULL,password VARCHAR(50) NOT NULL,profile_pics VARCHAR(100) NULL,address VARCHAR(100) NULL,sex CHAR(20) NULL,country VARCHAR(50) NULL,state CHAR(50) NULL,date_of_birth VARCHAR(30) NULL,postal_code INT NULL,lga VARCHAR(50) NULL,profession VARCHAR(50) NUll,marital_status VARCHAR(50) NULL,religion VARCHAR(50) NULL,nk_name VARCHAR(50) NULL,nk_phone VARCHAR(20) NULL, presence INT NULL, date CHAR(30) NULL, sign char(20) NULL, primary key(id))";
 			$this->sql_query("table",$sql);
 		}
+		
+		public function menu(){
+			$sql = "CREATE TABLE IF NOT EXISTS menu(id INT AUTO_INCREMENT, user_id INT NOT NULL, menu_type VARCHAR(30) NOT NULL, picture VARCHAR(150) NULL, text VARCHAR(1500) NULL, height VARCHAR(15) NULL, complection VARCHAR(15) NULL, finder_id INT NULL, name_2 VARCHAR(30) NULL, last_seen VARCHAR(30) NULL, location VARCHAR(50) NULL, found_date VARCHAR(30) NULL, reward VARCHAR(30) NULL, Authorize INT NULL, primary key(id))";
+			$this->sql_query("table",$sql);
+		}
+		
+		
+		function missing(){
+			$sql = "SELECT * FROM menu WHERE menu_type = 'missing' && Authorize = '1' ORDER BY id DESC";
+			$retval = mysqli_query($this->conn(),$sql);
+			if(mysqli_num_rows($retval)){
+				while($row = mysqli_fetch_assoc($retval)){
+					echo'
+						<div class="col-md-4">
+							<div class="missing-person-card">
+								<img src="'.$row['picture'].'" alt="Missing Person">
+								<h2>'.$row['name_2'].'</h2>
+								<p style="color: #000;">Last seen: '.$row['last_seen'].'</p>
+								<p style="color: #000;">Location: '.$row['location'].'</p>
+								<p style="color: #000;">Description: '.$row['text'].'</p>
+								<p class="reward">Reward: $'.$row['reward'].'</p>
+							</div>
+						</div>
+					';
+				}
+			}
+		}
+		
+		function wanted(){
+			$sql = "SELECT * FROM menu WHERE menu_type = 'wanted' && Authorize = '1' ORDER BY id DESC";
+			$retval = mysqli_query($this->conn(),$sql);
+			if(mysqli_num_rows($retval)){
+				while($row = mysqli_fetch_assoc($retval)){
+					echo'
+						<div class="col-md-4">
+							<div class="missing-person-card">
+								<img src="'.$row['picture'].'" alt="Missing Person">
+								<h2>'.$row['name_2'].'</h2>
+								<p style="color: #000;">Last seen: '.$row['last_seen'].'</p>
+								<p style="color: #000;">Location: '.$row['location'].'</p>
+								<p style="color: #000;">Description: '.$row['text'].'</p>
+								<p class="reward">Reward: $'.$row['reward'].'</p>
+							</div>
+						</div>
+					';
+				}
+			}
+		}
 	}
 	$fetcher = new fetcher;
 	
 	//$fetcher->users_table();
 	//$fetcher->random_numbers();
+	//$fetcher->menu();
 	
 ?>
